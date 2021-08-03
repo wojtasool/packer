@@ -1,0 +1,38 @@
+{
+  "builders": [
+    {
+      "vm_name": "base_oel7_template.qcow2",
+      "type": "qemu",
+      "accelerator": "kvm",
+      "headless": "true",
+      "qemuargs": [
+        [ "-m", "2048M" ]
+      ],
+      "disk_interface": "virtio",
+      "disk_size": 20000,
+      "format": "qcow2",
+
+      "iso_checksum_type": "none",
+      "iso_url": "/opt/GIT/os/centos7/x86_64-boot.iso",
+
+      "http_directory": "/opt/GIT/os/BASE_LAN/centos7/kickstart",
+      "output_directory": "/opt/RAID10/base_image/",
+
+      "ssh_username": "root",
+      "ssh_password": "vmpass",
+      "ssh_wait_timeout": "1h",
+      "shutdown_command": "shutdown -P now",
+
+      "boot_wait": "5s",
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/BASE_CENTOS7.cfg <enter>"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "script": "../provisioners/prepare.sh"
+    }
+  ]
+}

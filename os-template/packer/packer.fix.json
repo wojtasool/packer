@@ -1,0 +1,38 @@
+{
+  "builders": [
+    {
+      "accelerator": "kvm",
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/BASE_CENTOS7.cfg <enter>"
+      ],
+      "boot_wait": "1s",
+      "disk_interface": "virtio",
+      "disk_size": "20000M",
+      "format": "qcow2",
+      "headless": "false",
+      "memory": "4096",
+      "http_directory": "/opt/GIT/os/BASE_LAN/centos7/kickstart",
+      "iso_checksum": "none",
+      "iso_url": "/opt/GIT/os/BASE_LAN/centos7/x86_64-boot-uek.iso",
+      "output_directory": "/opt/RAID10/base_image2/",
+      "cpus": "4",
+      "shutdown_command": "shutdown -P now",
+      "ssh_password": "vmpass",
+      "ssh_timeout": "1h",
+      "ssh_username": "root",
+      "type": "qemu",
+      "vm_name": "base_oel7uek_template.qcow2"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "../provisioners/hostkey.pub",
+      "destination": "/root/hostkey.pub"
+    },
+    {
+      "script": "../provisioners/prepare.sh",
+      "type": "shell"
+    }
+  ]
+}

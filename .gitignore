@@ -1,0 +1,2 @@
+os-template/*.iso
+os-template/packer/packer_cache/*
